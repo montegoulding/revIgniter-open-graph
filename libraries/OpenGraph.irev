@@ -1,0 +1,138 @@
+<?rev
+put gBASEPATH into gBASEPATH
+
+if gBASEPATH is "gBASEPATH" then
+	put "No direct script access allowed."
+	exit to top
+end if
+
+##
+# revIgniter
+#
+# An application development framework for revTalk
+# modeled on CodeIgniter.
+#
+# @package		revIgniter
+# @author		rabit@revigniter.com
+# @copyright	Copyright (c) 2009 - 2010, dimensionB Bitter u. Bitter GmbH
+# @license		http://revigniter.com/userGuide/license.html
+# @link		    http://revigniter.com
+##
+
+## ------------------------------------------------------------------------
+
+##
+# Open Graph Library
+#
+# Adds Open Graph Protocol Meta Tags
+#
+# @package		revIgniter
+# @subpackage	Libraries
+# @category	  	Open Graph
+# @author		monte@goulding.ws
+# @link		    http://goulding.ws
+##
+
+
+# LOGGING
+rigLogMessage "debug", "Open Graph Library Loaded"
+
+
+# DECLARE VARIABLES
+global gOpenGraph,gData
+
+put TRUE into sAutoHeading
+put return into sNewline
+
+
+
+
+
+----------------------------------------------------------------------
+--| COMMAND rigRunInitialOpenGraphConfig
+--|
+--| Author: Monte Goulding
+--| Version:  1.0
+--| Created: 14-09-10
+--| Last Mod: 14-09-10
+--| Requires: --
+--|
+--| Summary: Run initial configuration procedures. Don't remove, even if it does nothing.
+--| 
+--| Format:  rigRunInitialOpenGraphConfig param1
+--|
+--| Parameters: array <pConfig>
+--|
+--| Return: void
+----------------------------------------------------------------------
+
+command rigRunInitialOpenGraphConfig pConfig
+	if there is a file gAPPPATH & "config/opengraph" & gEXT then
+		include gAPPPATH & "config/opengraph" & gEXT
+	end if
+	if pConfig is an array then
+		union pConfig with gOpenGraph
+		put pConfig into gOpenGraph
+	end if
+end rigRunInitialOpenGraphConfig
+
+
+----------------------------------------------------------------------
+--| FUNCTION rigOpenGraphNameSpace
+--|
+--| Author: Monte Goulding
+--| Version:  1.0
+--| Created: 14-09-10
+--| Last Mod: 14-09-10
+--|
+--| Summary: Returns the namespace to be used in the <html> tag
+--|				in header view files use <html <?rev return rigOpenGraphNameSpace() ?>>
+--| 			more info at http://opengraphprotocol.org/
+--| 
+--| Format:  rigOpenGraphNameSpace()
+--|
+--| Parameters: none
+--|
+--| Return: namespace
+----------------------------------------------------------------------
+
+function rigOpenGraphNameSpace
+	return "xmlns:og="&quote&"http://ogp.me/ns#"&quote
+end rigOpenGraphNameSpace
+
+
+----------------------------------------------------------------------
+--| FUNCTION rigOpenGraphMetaTags
+--|
+--| Author: monte
+--| Version:  1.0
+--| Created: 14-09-10
+--| Last Mod: 14-09-10
+--|
+--| Summary: Takes an array of open graph properties and values
+--| 			more info at http://opengraphprotocol.org/
+--|				array keys should not include og: before property name
+--| 
+--| Format:  rigOpebGraphMetaTags(param)
+--|
+--| Parameters: array <pArray>
+--|
+--| Return: meta tags
+----------------------------------------------------------------------
+
+function rigOpenGraphMetaTags pArray
+	local tMeta,tProperty
+	if pArray is an array then
+		union pArray with gOpenGraph
+		put pArray into gOpenGraph
+	end if
+	repeat for each line tProperty in keys(gOpenGraph)
+		if gOpenGraph[tProperty] <> "" then
+			put "<meta property="&quote&"og:"&tProperty&quote&" content="&quote&gOpenGraph[tProperty]&quote&" />" &cr after tMeta
+		else if tProperty = "title" then
+			put "<meta property="&quote&"og:title"&quote&" content="&quote&gData["pageTitle"]&quote&" />" &cr after tMeta
+		end if
+	end repeat	
+	return tMeta
+end rigOpenGraphMetaTags
+

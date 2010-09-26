@@ -1,0 +1,131 @@
+<?rev
+put gBASEPATH into gBASEPATH
+
+if gBASEPATH is "gBASEPATH" then
+	put "No direct script access allowed."
+	exit to top
+end if
+
+
+##
+#-------------------------------------------------------------------------
+# OPEN GRAPH PROTOCOL
+#-------------------------------------------------------------------------
+# This file helps you implement the Open Graph Protocol in your application
+#
+#	http://opengraphprotocol.org
+#   
+#	Here you set site wide values for your open graph properties
+#	These properties can be overridden when the library is initalised and
+#	when you call rigOpenGraphMetaTags with an array of properties
+#	these properties will retain their value unless overridden
+#	Any property left empty will not have a meta tag generated
+
+# Requested URL (don't change unless you know what you are doing)
+put rigUriString() into gOpenGraph["url"]
+
+# Site Name - set it once here then forget about it
+put "Your Site Name" into gOpenGraph["site_name"]
+
+# Page specific properties that you might like yo default
+
+# Page title (unlikely you will want to set that here)
+# if empty when rigOpenGraphMetaTags is called gData["pageTitle"] will be used
+# so in most cases leave empty
+put "" into gOpenGraph["title"]
+
+# Image associated with this page (set this here to have a default image for all your pages)
+# change cubes.png to your image file
+if gConfig["assetsLocation"] = "" then
+	put gConfig["baseUrl"]&"assets/img/cubes.png" into gOpenGraph["image"]
+else
+	put gConfig["baseUrl"]&gConfig["assetsLocation"]&"/img/cubes.png" into gOpenGraph["image"]
+end if
+
+# Description of this page (set this here to have a default description for all your pages)
+put "" into gOpenGraph["description"]
+
+# Uncomment the correct default type for this application and use this list as a guide
+# for when you call rigOpenGraphMetaTags
+# website is uncommented by default so if you change it make sure you comment it
+
+# Activities
+# put "activity" into gOpenGraph["type"]
+# put "sport" into gOpenGraph["type"]
+
+# Businesses
+# put "bar" into gOpenGraph["type"]
+# put "company" into gOpenGraph["type"]
+# put "cafe" into gOpenGraph["type"]
+# put "restaurant" into gOpenGraph["type"]
+
+# Groups
+# put "cause" into gOpenGraph["type"]
+# put "sports_league" into gOpenGraph["type"]
+# put "sports_team" into gOpenGraph["type"]
+
+# Organizations
+# put "band" into gOpenGraph["type"]
+# put "government" into gOpenGraph["type"]
+# put "non_profit" into gOpenGraph["type"]
+# put "university" into gOpenGraph["type"]
+# put "sports_team" into gOpenGraph["type"]
+
+# People
+# put "actor" into gOpenGraph["type"]
+# put "athlete" into gOpenGraph["type"]
+# put "author" into gOpenGraph["type"]
+# put "director" into gOpenGraph["type"]
+# put "musician" into gOpenGraph["type"]
+# put "politician" into gOpenGraph["type"]
+# put "public_figure" into gOpenGraph["type"]
+
+# Places
+# put "city" into gOpenGraph["type"]
+# put "landmark" into gOpenGraph["type"]
+# put "state_province" into gOpenGraph["type"]
+# put "country" into gOpenGraph["type"]
+
+# Products and Entertainment
+# put "album" into gOpenGraph["type"]
+# put "book" into gOpenGraph["type"]
+# put "drink" into gOpenGraph["type"]
+# put "food" into gOpenGraph["type"]
+# put "game" into gOpenGraph["type"]
+# put "movie" into gOpenGraph["type"]
+# put "product" into gOpenGraph["type"]
+# put "song" into gOpenGraph["type"]
+# put "tv_show" into gOpenGraph["type"]
+# put "song" into gOpenGraph["type"]
+
+# Websites
+# put "article" into gOpenGraph["type"]
+# put "blog" into gOpenGraph["type"]
+put "website" into gOpenGraph["type"]
+
+# Location Details
+put "" into gOpenGraph["latitude"]
+put "" into gOpenGraph["longitude"]
+put "" into gOpenGraph["street-address"]
+put "" into gOpenGraph["locality"]
+put "" into gOpenGraph["region"]
+put "" into gOpenGraph["postal-code"]
+put "" into gOpenGraph["country-name"]
+
+# Contact Details
+put "" into gOpenGraph["email"]
+put "" into gOpenGraph["phone_number"]
+put "" into gOpenGraph["fax_number"]
+
+# UPC Code
+put "" into gOpenGraph["upc"]
+
+# ISBN Number
+put "" into gOpenGraph["isbn"]
+
+
+
+
+--| END OF opengraph.irev
+--| Location: ./system/application/config/opengraph.irev
+----------------------------------------------------------------------
